@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\GameManager.js" />
+     <Compile Include="Assets\Scripts\House.js" />
+     <Compile Include="Assets\Scripts\Map.js" />
      <Compile Include="Assets\Scripts\Region.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
