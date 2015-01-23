@@ -3,8 +3,13 @@ guid: 0fa584be3e68dc148a27d09ee402ee57
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - colorMap: {fileID: 2800000, guid: 2521ab2c773a2d94780d7533f561c2d1, type: 3}
   - army: {fileID: 100000, guid: 3390c6474395ea14f8723cfb3d336e4a, type: 2}
+  - regions_map: {fileID: 2800000, guid: 130416be11573a142af557dd70acb97c, type: 3}
+  - terrainMap: {fileID: 2800000, guid: c059aabe6df9c1c47a09b17603231d9c, type: 3}
+  - map_base: {fileID: 2800000, guid: 4cbba4a514e12f340b89804022736451, type: 3}
+  - terrain_base: {fileID: 2800000, guid: 08602b49e1dbcff449724e10c58fd61b, type: 3}
+  - tiles: {fileID: 2800000, guid: 109387080c192bb47845c502e3257d37, type: 3}
+  - treeTiles: {fileID: 2800000, guid: d06855ccf26013a48a01c31809e78df4, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
