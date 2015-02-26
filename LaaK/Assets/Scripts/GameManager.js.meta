@@ -5,11 +5,9 @@ MonoImporter:
   defaultReferences:
   - army: {fileID: 100000, guid: 3390c6474395ea14f8723cfb3d336e4a, type: 2}
   - regions_map: {fileID: 2800000, guid: 130416be11573a142af557dd70acb97c, type: 3}
-  - terrainMap: {fileID: 2800000, guid: c059aabe6df9c1c47a09b17603231d9c, type: 3}
-  - map_base: {fileID: 2800000, guid: 4cbba4a514e12f340b89804022736451, type: 3}
-  - terrain_base: {fileID: 2800000, guid: 08602b49e1dbcff449724e10c58fd61b, type: 3}
-  - tiles: {fileID: 2800000, guid: 109387080c192bb47845c502e3257d37, type: 3}
-  - treeTiles: {fileID: 2800000, guid: d06855ccf26013a48a01c31809e78df4, type: 3}
+  - vis_map: {fileID: 2800000, guid: 0c725a703b53b5646989c775f45d9f84, type: 3}
+  - color_map: {fileID: 2800000, guid: 367106e2befc235439397664034c5448, type: 3}
+  - region_name: {fileID: 11420778, guid: dc5d42c066a4fbd4a8cb333416b3d3df, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,20 +1,9 @@
 ﻿class Map {
 	var regions = new Array();
 	var regionsMap : Texture2D;
-	var terrainMap : Texture2D;
-	var base : Texture2D;
-	var terrain_base : Texture2D;
-	var tiles : Texture2D;
-	var treeTiles : Texture2D;
-	var tSize = 40;
 		
-	function Map(rMap : Texture2D, tMap : Texture2D, baseMap : Texture2D, baseTerrain : Texture2D, tileTexturs : Texture2D, trees : Texture2D){
+	function Map(rMap : Texture2D){
 		regionsMap = rMap;
-		terrainMap = tMap;
-		base = baseMap;
-		terrain_base = baseTerrain;
-		tiles = tileTexturs;
-		treeTiles = trees;
 		generateRegions();
 	}
 	
@@ -49,9 +38,9 @@ function generateRegions() {
 		Sansford.position = new Vector2(0.0,-4.0);
 		regions.Push(Sansford);
 		
-	var Sansmarsh = new Region("Sansmarsh", "marsh", Color32(201,179,215,255));
-		Sansmarsh.position = new Vector2(-3.7,-4.4);
-		regions.Push(Sansmarsh);
+	var Valmarsh = new Region("Valmarsh", "marsh", Color32(201,179,215,255));
+		Valmarsh.position = new Vector2(-3.7,-4.4);
+		regions.Push(Valmarsh);
 	
 	var Esterwood = new Region("Esterwood", "forest", Color32(102,125,21,255));
 		Esterwood.position = new Vector2(2.2,3.3);
@@ -64,10 +53,48 @@ function generateRegions() {
 	var ValeSur = new Region("Vale Sur", "forest", Color32(102,15,21,255));
 		ValeSur.position = new Vector2(4.3,2.3);
 		regions.Push(ValeSur);
+	
+	var Kindlewood = new Region("Kindlewood", "forest", Color32(123,72,158,255));
+		Kindlewood.position = new Vector2(4.3,2.3);
+		regions.Push(Kindlewood);
+		
+	var ThiemanRock = new Region("Thieman Rock", "plains", Color32(158,55,140,255));
+		ThiemanRock.position = new Vector2(4.3,2.3);
+		regions.Push(ThiemanRock);
+		
+	var FishermansCliff = new Region("Fisherman's Cliff", "plains", Color32(62,109,54,255));
+		FishermansCliff.position = new Vector2(4.3,2.3);
+		regions.Push(FishermansCliff);
+		
+	var Carval = new Region("Carval", "plains", Color32(86,34,239,255));
+		Carval.position = new Vector2(4.3,2.3);
+		regions.Push(Carval);
+		
+	var Redpass = new Region("Redpass", "forest", Color32(92,185,20,255));
+		Redpass.position = new Vector2(4.3,2.3);
+		regions.Push(Redpass);
+		
+	var Gradshill = new Region("Gradshill", "plains", Color32(163,161,86,255));
+		Gradshill.position = new Vector2(4.3,2.3);
+		regions.Push(Gradshill);
+		
+	var Berryford = new Region("Berryford", "plains", Color32(178,35,20,255));
+		Berryford.position = new Vector2(4.3,2.3);
+		regions.Push(Berryford);
+		
+	var Brightbend = new Region("Brightbend", "plains", Color32(186,107,20,255));
+		Brightbend.position = new Vector2(4.3,2.3);
+		regions.Push(Brightbend);
+		
+	var Willowood = new Region("Willowood", "forest", Color32(186,200,20,255));
+		Willowood.position = new Vector2(4.3,2.3);
+		regions.Push(Willowood);
+		
+	var MorgainsFork = new Region("Morgain's Fork", "forest", Color32(18,90,20,255));
+		MorgainsFork.position = new Vector2(4.3,2.3);
+		regions.Push(MorgainsFork);
 		
 	generateBorders();
-	
-	spawnTiles();
 }
 
 function generateBorders(){
@@ -132,171 +159,4 @@ function insertBorder(main : Region, adding : Region) {
 	main.borders.Push(adding);	
 }
 
-function spawnTiles(){
-	var oceanColor = new Color32(0,0,255,255);
-	var forestColor = new Color32(0,255,0,255);
-	var mountainColor = new Color32(255,255,255,255);
-	
-	var coastArray1 = buildTileArray(tSize,2, tiles);
-	var coastArray2 = buildTileArray(tSize*5,2, tiles);
-	var coastArray3 = buildTileArray(tSize*9,2, tiles);
-	var coastArray4 = buildTileArray(tSize*13,2, tiles);
-	var coastArray5 = buildTileArray(tSize*17,1, tiles);
-	
-	var forestArray = buildAssetArray(0,3,treeTiles);
-	
-	var landTile = tiles.GetPixels(0,0,tSize,tSize,0);
-	var waterTile = tiles.GetPixels(tSize,0,tSize,tSize,0);
-	
-	//Loop through every square on the RegionsMap, draw the coast and the terrain
-	//TODO: Clamp texture to prevent overflow?
-	for(var i = 0; i<regionsMap.width; i++){
-		for(var j = regionsMap.height - 1; j>=0; j--){
-		
-			var pos = new Vector2(i,j);
-		
-			tileColor = regionsMap.GetPixel(i,j);
-			leftColor = regionsMap.GetPixel(i-1,j);
-			rightColor = regionsMap.GetPixel(i+1,j);
-			topColor = regionsMap.GetPixel(i,j+1);
-			botColor = regionsMap.GetPixel(i,j-1);
-			
-		if(tileColor != oceanColor){
-			//checkAdjacentColors(left, right, top, bottom, etc... checks if each true side is the color it is checking
-			
-			if(checkAdjacentColors(false, false, true, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray1[Random.Range(0,coastArray1.length)])[3],0);
-			}
-			else if(checkAdjacentColors(false, false, false, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray1[Random.Range(0,coastArray1.length)])[1],0);
-			}
-			else if(checkAdjacentColors(true, false, false, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray1[Random.Range(0,coastArray1.length)])[2],0);
-			}
-			else if(checkAdjacentColors(false, true, false, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray1[Random.Range(0,coastArray1.length)])[0],0);
-			}
-			
-			else if(checkAdjacentColors(false, true, true, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray2[Random.Range(0,coastArray2.length)])[0],0);
-			}
-			else if(checkAdjacentColors(true, false, true, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray2[Random.Range(0,coastArray2.length)])[3],0);
-			}
-			else if(checkAdjacentColors(false, true, false, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray2[Random.Range(0,coastArray2.length)])[1],0);
-			}
-			else if(checkAdjacentColors(true, false, false, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray2[Random.Range(0,coastArray2.length)])[2],0);
-			}
-			
-			else if(checkAdjacentColors(false, false, true, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray3[Random.Range(0,coastArray3.length)])[1],0);
-			}
-			else if(checkAdjacentColors(true, true, false, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray3[Random.Range(0,coastArray3.length)])[0],0);
-			}
-			
-			else if(checkAdjacentColors(true, true, false, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray4[Random.Range(0,coastArray4.length)])[2],0);
-			}
-			else if(checkAdjacentColors(true, true, true, false, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray4[Random.Range(0,coastArray4.length)])[0],0);
-			}
-			else if(checkAdjacentColors(false, true, true, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray4[Random.Range(0,coastArray4.length)])[3],0);
-			}
-			else if(checkAdjacentColors(true, false, true, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray4[Random.Range(0,coastArray4.length)])[1],0);
-			}
-			
-			else if(checkAdjacentColors(true, true, true, true, pos, oceanColor)){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,(coastArray5[Random.Range(0,coastArray5.length)])[0],0);
-			}
-			
-			else if(tileColor != oceanColor){
-				base.SetPixels(i*tSize,j*tSize,tSize,tSize,landTile,0);
-			}
-		}
-		else base.SetPixels(i*tSize,j*tSize,tSize,tSize,waterTile,0);
-		
-		//Set Terrain
-		if(terrainMap.GetPixel(i,j) == forestColor){
-			//base.SetPixels(i*tSize,j*tSize,tSize,tSize,forestArray[0],0);
-			terrain_base.SetPixels(i*tSize,j*tSize,tSize,tSize,forestArray[0],0);
-			Debug.Log(terrain_base.GetPixel(i*tSize+20,j*tSize+20));
-		}
-		
-		}		
-	}
-	
-	base.Apply();
 }
-
-function checkAdjacentColors(left : boolean, right : boolean, top : boolean, bot : boolean, position : Vector2, color : Color32){
-    tileColor = regionsMap.GetPixel(position.x, position.y);
-	leftColor = regionsMap.GetPixel(position.x-1, position.y);
-	rightColor = regionsMap.GetPixel(position.x+1, position.y);
-	topColor = regionsMap.GetPixel(position.x, position.y+1);
-	botColor = regionsMap.GetPixel(position.x, position.y-1);
-	
-	if(left == true && leftColor != color)
-			return false;
-	if(left == false && leftColor == color)
-			return false;
-	
-	if(right == true && rightColor != color)
-			return false;
-	if(right == false && rightColor == color)
-			return false;
-	
-	if(top == true && topColor != color)
-			return false;
-	if(top == false && topColor == color)
-			return false;
-	
-	if(bot == true && botColor != color)
-			return false;
-	if(bot == false && botColor == color)
-			return false;
-	
-	return true;
-}
-
-//Build Array of Arrays of tiles.  The inside arrays contain all 4 rotations of each tile
-
-function buildTileArray(height : int, num : int, sourceTiles : Texture2D){
-	var tileArray = new Array();
-	var rotationArray;
-		
-	for(var i = 0; i<num; i++){
-		rotationArray = new Array();
-		rotationArray.Push(sourceTiles.GetPixels(tSize*i, height, tSize,tSize,0));
-		rotationArray.Push(sourceTiles.GetPixels(tSize*i, height+tSize, tSize,tSize,0));
-		rotationArray.Push(sourceTiles.GetPixels(tSize*i, height+tSize*2, tSize,tSize,0));
-		rotationArray.Push(sourceTiles.GetPixels(tSize*i, height+tSize*3, tSize, tSize,0));
-		
-		tileArray.Push(rotationArray);
-	}
-	
-	return tileArray;
-}
-
-function buildAssetArray(height : int, num : int, sourceTiles : Texture2D){
-	var assetArray = new Array();
-		
-	for(var i = 0; i<num; i++){
-		assetArray.Push(sourceTiles.GetPixels(tSize*i, height, tSize,tSize,0));
-	}
-	
-	return assetArray;
-}
-}
-
-
-
-
-
-
-
-
